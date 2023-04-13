@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" >
+<head>
+  <meta charset="UTF-8">
+  <title>Admin panel</title>
+</head>
+<body>
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Имя</th>
+    <th>Фамилия</th>
+    <th>Хэши паролей</th>
+    <th>Роли</th>
+    <th>Кнопки</th>
+  </tr>
+  <tr th:each="user : ${users}">
+    <td th:text="${user.id}"></td>
+    <td th:text="${user.name}"></td>
+    <td th:text="${user.lastname}"></td>
+    <td th:text="${user.password}"></td>
+    <td th:text="${user.getRoles()}"></td>
+    <td>
+      <form  th:action="@{/admin/{id}/edit (id=${user.id})}">
+        <button type="submit" class="button">Редактировать</button>
+      </form>
+      <form th:method="DELETE" th:action="@{/admin/{id} (id=${user.id})}">
+        <button type="submit" class="button">Удалить пользователя</button>
+      </form>
+      <form th:method="PATCH" th:action="@{/admin/role/{id} (id=${user.id})}">
+        <button type="submit" class="button">Дать админку</button>
+      </form>
+      <form th:method="DELETE" th:action="@{/admin/role/{id} (id=${user.id})}">
+        <button type="submit" class="button">Удалить админку</button>
+      </form>
+    </td>
+  </tr>
+</table>
+<a th:href="@{/registration}">Регистрация нового пользователя</a>
+<br>
+<a th:href="@{/logout}">Разлогирование</a>
+</body>
+</html>
